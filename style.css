@@ -1,0 +1,37 @@
+table, tr, td, th {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    color: rgb(230, 13, 211);
+  }
+  .roboto-medium {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+ 
+  tr:nth-child(even) {
+    background-color: #272430;
+  }
+  tr:nth-child(odd) {
+    background-color: #1c1c1d;
+  }
+ 
+  tr:hover td {
+    background-color: #696262;
+  }
+ 
+ 
+table, thead, tr{
+        font-weight: bold;
+        background-color: #333;
+        color: white;
+  }
+
+th{
+    color: white;
+    background-color: darkslategrey;
+}
+ 
+ 
+ 
