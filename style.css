@@ -1,9 +1,10 @@
-table, tr, td, th {
+table, td, tr, th {
     border: 1px solid black;
     border-collapse: collapse;
     text-align: center;
-    color: rgb(230, 13, 211);
+    color: rgb(0, 153, 255);
   }
+ 
   .roboto-medium {
     font-family: "Roboto", sans-serif;
     font-weight: 500;
@@ -11,27 +12,30 @@ table, tr, td, th {
   }
  
   tr:nth-child(even) {
-    background-color: #272430;
+    background-color: #272727;
   }
+ 
   tr:nth-child(odd) {
-    background-color: #1c1c1d;
+    background-color: #505050;
   }
+ 
  
   tr:hover td {
-    background-color: #696262;
+    background-color: #cfcfcf;
   }
  
+table th tr td {
+    font-weight: bold;
+    background-color: #333;
+    color: white;
+  }
  
-table, thead, tr{
-        font-weight: bold;
-        background-color: #333;
-        color: white;
+  table thead tr th{
+    color: rgb(255, 255, 255);
+    background-color: #333;
   }
 
-th{
-    color: white;
-    background-color: darkslategrey;
-}
- 
- 
- 
+  .selected{
+    transform: scale(1.2);
+    transition: 2s;
+  } 
