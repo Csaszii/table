@@ -27,110 +27,177 @@ let array = [
         pet: 'macska'
     },
 ]
-
+ 
+ 
+ 
+ 
 const table = document.createElement("table")
 const tableHeader = document.createElement("thead")
 const tableHeaderRow = document.createElement("tr")
-
-const tableHeaderRowLastName = document.createElement("th")
-const tableHeaderRowFirstName = document.createElement("th")
-const tableHeaderRowPet = document.createElement("th")
+ 
+/* Fejléc sorok létrehozása */
+const tableHeaderRowLastname = document.createElement("th")
+tableHeaderRowLastname.innerHTML = "Vezetéknév"
+ 
+const tableHeaderRowFirstname = document.createElement("th")
+tableHeaderRowFirstname.innerHTML = "Keresztnév"
+ 
 const tableHeaderRowMarried = document.createElement("th")
-
+tableHeaderRowMarried.innerHTML = "Házas"
+ 
+const tableHeaderRowAnimal = document.createElement("th")
+tableHeaderRowAnimal.innerHTML = "Állat"
+/**/
+ 
+tableHeaderRowFirstname.colSpan = 2
 const tableBody = document.createElement("tbody")
-
-tableHeaderRowLastName.innerHTML = "Vezetéknév"
-tableHeaderRowFirstName.innerHTML = "Keresztnév"
-tableHeaderRowPet.innerHTML = "Pet"
-tableHeaderRowMarried.innerHTML = "Married"
-tableHeaderRowFirstName.colSpan = 2
-
-function RenderTable(){
-    
-    for(const person of array){
-        
-        const tr = document.createElement("tr")
-        
-        tr.addEventListener('click', function(e){
-            const selectedRow = tableBody.querySelector('.selected')
-    
-            if(selectedRow != undefined){
-                selectedRow.classList.remove('selected')
-            }
-            
-            console.log('click')
-            e.currentTarget.classList.add('selected')
-            
-        })
-        
-        tableBody.appendChild(tr)
-        const td = document.createElement("td")
-        tr.appendChild(td)
-        td.innerHTML = person.lastname
-        
-        const firstname1 = document.createElement("td")
-        firstname1.innerHTML = person.firstname1
-        tr.appendChild(firstname1)
-        
-        if(person.firstname2 === undefined){
-            firstname1.colSpan = 2 
-        }
-        else {
-            const firstname2  = document.createElement("td")
-            firstname2.innerHTML = person.firstname2
-            tr.appendChild(firstname2)
-        }
-        
-        const tdPet = document.createElement("td")
-        tdPet.innerHTML = person.pet
-        tr.appendChild(tdPet)
-        
-        const tdMarried = document.createElement("td")
-        tdMarried.innerHTML = person.married ? 'Yes' : 'No'
-        tr.appendChild(tdMarried)    
-        
-        tableBody.appendChild(tr)    
-    }
-    
-    const form = document.getElementById("form")
-    form.addEventListener('submit', function(e){
+ 
+ 
+document.body.appendChild(table)
+ 
+table.appendChild(tableHeader)
+ 
+tableHeader.appendChild(tableHeaderRow)
+ 
+/* Fejléc sorok hozzáadása */
+tableHeaderRow.appendChild(tableHeaderRowLastname)
+ 
+tableHeaderRow.appendChild(tableHeaderRowFirstname)
+ 
+tableHeaderRow.appendChild(tableHeaderRowMarried)
+ 
+tableHeaderRow.appendChild(tableHeaderRowAnimal)
+/***/
+ 
+table.appendChild(tableBody)
+ 
+ 
+ 
+const form = document.getElementById("form")
+form.addEventListener('submit', function(e){
+    tableBody.innerHTML=''
         e.preventDefault()
         const lastname = document.getElementById('lastname')
         const firstname1 = document.getElementById('firstname1')
         const firstname2 = document.getElementById('firstname2')
         const married = document.getElementById('married')
         const pet = document.getElementById('pet')
-        
+ 
         const lastnameValue = lastname.value
         const firstname1Value = firstname1.value
         let firstname2Value = firstname2.value
-        const marriedValue = married.checked
+        const marriedChecked = married.checked
         const petValue = pet.value
-        
-        array.push({
-            lastname : lastnameValue,
-            firstname1 : firstname1Value,
-            firstname2 : firstname2Value,
-            married : marriedValue,
-            pet : petValue
-        })
-        
-        if(firstname2Value === ''){
+ 
+        if(firstname2Value === '')
+        {
             firstname2Value = undefined
         }
-
+       
+        if (validatefields(lastname, firstname1, pet)){
+            array.push({
+                lastname: lastnameValue,
+                firstname1: firstname1Value,
+                firstname2: firstname2Value,
+                married: marriedChecked,
+                pet: petValue,
+            })    
+        }
+ 
+       
+       
+        RenderTable();
+       
+ 
         console.log(array)
-        
-    })
-}
-
-document.body.appendChild(table)
-table.appendChild(tableHeader)
-tableHeader.appendChild(tableHeaderRow)
-tableHeaderRow.appendChild(tableHeaderRowLastName)
-tableHeaderRow.appendChild(tableHeaderRowFirstName)
-tableHeaderRow.appendChild(tableHeaderRowPet)
-tableHeaderRow.appendChild(tableHeaderRowMarried)
-table.appendChild(tableBody)
-
+ 
+})
+ 
 RenderTable();
+ 
+function RenderTable(){
+    for(const person of array){
+        person.lastname
+        const tr = document.createElement("tr")
+   
+        tr.addEventListener('click', function(e){
+            console.log('click')
+            const selectedrow = tableBody.querySelector('.selected')
+            if(selectedrow != undefined)
+            {
+                selectedrow.classList.remove('selected')
+            }
+            e.currentTarget.classList.add('selected')
+        })
+       
+        tr.innerHTML = person.lastname
+        tableBody.appendChild(tr)
+   
+        const td = document.createElement("td")
+        td.innerHTML = person.firstname1
+        tr.appendChild(td)
+   
+       
+        if(person.firstname2 === undefined)
+        {
+            td.colSpan = 2
+        }
+   
+        else
+        {
+            const td2 = document.createElement("td")
+            td2.innerHTML = person.firstname2
+            tr.appendChild(td2)
+        }
+   
+       
+        const td3 = document.createElement("td")
+        td3.innerHTML = person.married
+   
+   
+        if(td3.innerHTML == "false")
+        {
+            td3.innerHTML = "Nem"
+            tr.appendChild(td3)
+        }
+        else
+        {
+            td3.innerHTML = "Igen"
+            tr.appendChild(td3)
+        }
+   
+       
+        const td4 = document.createElement("td")
+       
+        td4.innerHTML = person.pet
+        tr.appendChild(td4)  
+    }    
+}
+ 
+ 
+function validatefields(lastnamevali, firstname1vali, petvali){
+    let result = true
+ 
+    if(lastnamevali.value === '')
+    {
+        let error = lastnamevali.parentElement.querySelector('.error')
+        error.innerHTML = 'Vezetéknév kötelező!'
+        result = false
+    }
+ 
+    else if(firstname1vali.value === '')
+    {
+        let error = firstname1vali.parentElement.querySelector('.error')
+        error.innerHTML = 'Keresztnév kötelező!'
+        result = false
+    }
+ 
+    else if(petvali.value === '')
+    {
+        let error = petvali.parentElement.querySelector('.error')
+        error.innerHTML = 'Állat kötelező!'
+        result = false
+    }
+ 
+    return result
+}
