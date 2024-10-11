@@ -45,66 +45,68 @@ tableHeaderRowPet.innerHTML = "Pet"
 tableHeaderRowMarried.innerHTML = "Married"
 tableHeaderRowFirstName.colSpan = 2
 
-for(const person of array){
-
-    const tr = document.createElement("tr")
-
-    tr.addEventListener('click', function(e){
-        const selectedRow = tableBody.querySelector('.selected')
-
-        if(selectedRow != undefined){
-            selectedRow.classList.remove('selected')
+function RenderTable(){
+    
+    for(const person of array){
+        
+        const tr = document.createElement("tr")
+        
+        tr.addEventListener('click', function(e){
+            const selectedRow = tableBody.querySelector('.selected')
+    
+            if(selectedRow != undefined){
+                selectedRow.classList.remove('selected')
+            }
+            
+            console.log('click')
+            e.currentTarget.classList.add('selected')
+            
+        })
+        
+        tableBody.appendChild(tr)
+        const td = document.createElement("td")
+        tr.appendChild(td)
+        td.innerHTML = person.lastname
+        
+        const firstname1 = document.createElement("td")
+        firstname1.innerHTML = person.firstname1
+        tr.appendChild(firstname1)
+        
+        if(person.firstname2 === undefined){
+            firstname1.colSpan = 2 
         }
-
-        console.log('click')
-        e.currentTarget.classList.add('selected')
-
-    })
-
-    tableBody.appendChild(tr)
-    const td = document.createElement("td")
-    tr.appendChild(td)
-    td.innerHTML = person.lastname
-
-    const firstname1 = document.createElement("td")
-    firstname1.innerHTML = person.firstname1
-    tr.appendChild(firstname1)
-
-    if(person.firstname2 === undefined){
-        firstname1.colSpan = 2 
-    }
-    else {
-        const firstname2  = document.createElement("td")
-        firstname2.innerHTML = person.firstname2
-        tr.appendChild(firstname2)
-    }
-
-    const tdPet = document.createElement("td")
+        else {
+            const firstname2  = document.createElement("td")
+            firstname2.innerHTML = person.firstname2
+            tr.appendChild(firstname2)
+        }
+        
+        const tdPet = document.createElement("td")
         tdPet.innerHTML = person.pet
         tr.appendChild(tdPet)
-
-    const tdMarried = document.createElement("td")
+        
+        const tdMarried = document.createElement("td")
         tdMarried.innerHTML = person.married ? 'Yes' : 'No'
         tr.appendChild(tdMarried)    
+        
+        tableBody.appendChild(tr)    
+    }
     
-    tableBody.appendChild(tr)    
-}
-
-const form = document.getElementById("form")
-form.addEventListener('submit', function(e){
+    const form = document.getElementById("form")
+    form.addEventListener('submit', function(e){
         e.preventDefault()
         const lastname = document.getElementById('lastname')
         const firstname1 = document.getElementById('firstname1')
         const firstname2 = document.getElementById('firstname2')
         const married = document.getElementById('married')
         const pet = document.getElementById('pet')
-
+        
         const lastnameValue = lastname.value
         const firstname1Value = firstname1.value
-        const firstname2Value = firstname2.value
+        let firstname2Value = firstname2.value
         const marriedValue = married.checked
         const petValue = pet.value
-
+        
         array.push({
             lastname : lastnameValue,
             firstname1 : firstname1Value,
@@ -112,10 +114,15 @@ form.addEventListener('submit', function(e){
             married : marriedValue,
             pet : petValue
         })
+        
+        if(firstname2Value === ''){
+            firstname2Value = undefined
+        }
 
         console.log(array)
- 
-})
+        
+    })
+}
 
 document.body.appendChild(table)
 table.appendChild(tableHeader)
@@ -125,3 +132,5 @@ tableHeaderRow.appendChild(tableHeaderRowFirstName)
 tableHeaderRow.appendChild(tableHeaderRowPet)
 tableHeaderRow.appendChild(tableHeaderRowMarried)
 table.appendChild(tableBody)
+
+RenderTable();
