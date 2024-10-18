@@ -35,6 +35,12 @@ const table = document.createElement("table")
 const tableHeader = document.createElement("thead")
 const tableHeaderRow = document.createElement("tr")
  
+createTableCell("td", "Vezetéknév", tableHeaderRow)
+createTableCell("td", "Keresztnév", tableHeaderRow)
+createTableCell("td", "Házas", tableHeaderRow)
+createTableCell("td", "Állat", tableHeaderRow)
+
+
 /* Fejléc sorok létrehozása */
 const tableHeaderRowLastname = document.createElement("th")
 tableHeaderRowLastname.innerHTML = "Vezetéknév"
@@ -119,7 +125,8 @@ function RenderTable(){
     for(const person of array){
         person.lastname
         const tr = document.createElement("tr")
-   
+        tableBody.appendChild(tr)
+
         tr.addEventListener('click', function(e){
             console.log('click')
             const selectedrow = tableBody.querySelector('.selected')
@@ -131,8 +138,7 @@ function RenderTable(){
         })
        
         tr.innerHTML = person.lastname
-        tableBody.appendChild(tr)
-   
+
         const td = document.createElement("td")
         td.innerHTML = person.firstname1
         tr.appendChild(td)
@@ -200,4 +206,18 @@ function validatefields(lastnamevali, firstname1vali, petvali){
     }
  
     return result
+}
+
+/**
+ * 
+* @param {'td' | 'th'} tagName 
+ * @param {string} innerHTML 
+ * @param {HTMLTableRowElement} parent 
+ */
+
+function createTableCell(tagName, innerHTML, parent){
+    
+    const element = document.createElement("tagName")
+    element.innerHTML = innerHTML
+    parent.appendChild(cell)
 }
